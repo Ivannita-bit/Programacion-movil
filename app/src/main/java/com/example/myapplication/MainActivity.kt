@@ -18,12 +18,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 
@@ -33,13 +42,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                PantallaPrincipal()
+                MainScreen()
+                Login()
+                SignUp()
             }
         }
     }
 
     @Composable
-    fun PantallaPrincipal() {
+    fun MainScreen() {
 
         Box(
             modifier = Modifier
@@ -177,4 +188,319 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    @Composable
+    fun SignUp() {
+
+        val textFieldColors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = Color(0xFFEBEBEB),
+            unfocusedContainerColor = Color.White,
+            focusedBorderColor = Color(0xFF5B4DCC),
+            unfocusedBorderColor = Color(0xFFA59CE9),
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF5B4DCC)),
+            contentAlignment = Alignment.Center
+        ) {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .fillMaxHeight(0.9f)
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(30.dp)
+                    )
+                    .padding(24.dp)
+            ) {
+
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        // Imagagen principal
+                        Image(
+                            painter = painterResource(id = R.drawable.fondo_pantalla),
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(130.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(30.dp))
+
+                        //Title
+                        Text(
+                            text = "Sign Up",
+                            fontSize = 23.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black
+                        )
+
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        var name by remember { mutableStateOf("") }
+
+                        OutlinedTextField(
+                            value = name,
+                            onValueChange = { name = it },
+                            enabled = true,
+                            readOnly = false,
+                            label = { Text("Full name", color = Color.DarkGray) },
+                            modifier = Modifier.padding(5.dp),
+                            shape = CircleShape,
+                            colors = textFieldColors
+                        )
+
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        var email by remember { mutableStateOf("") }
+
+                        OutlinedTextField(
+                            value = email,
+                            onValueChange = { email = it },
+                            enabled = true,
+                            readOnly = false,
+                            label = { Text("Email", color = Color.DarkGray) },
+                            modifier = Modifier.padding(5.dp),
+                            shape = CircleShape,
+                            colors = textFieldColors
+                        )
+
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        var phone by remember { mutableStateOf("") }
+
+                        OutlinedTextField(
+                            value = phone,
+                            onValueChange = { phone = it },
+                            enabled = true,
+                            readOnly = false,
+                            label = { Text("Phone number", color = Color.DarkGray) },
+                            modifier = Modifier.padding(5.dp),
+                            shape = CircleShape,
+                            colors = textFieldColors
+                        )
+
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        var password by remember { mutableStateOf("") }
+
+                        OutlinedTextField(
+                            value = password,
+                            onValueChange = { password = it },
+                            enabled = true,
+                            readOnly = false,
+                            label = { Text("Password", color = Color.DarkGray) },
+                            visualTransformation = PasswordVisualTransformation(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            modifier = Modifier.padding(5.dp),
+                            shape = CircleShape,
+                            colors = textFieldColors
+                        )
+
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        var confirmPassword by remember { mutableStateOf("") }
+
+                        OutlinedTextField(
+                            value = confirmPassword,
+                            onValueChange = { confirmPassword = it },
+                            enabled = true,
+                            readOnly = false,
+                            label = { Text("Confirm Password", color = Color.DarkGray) },
+                            visualTransformation = PasswordVisualTransformation(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            modifier = Modifier.padding(5.dp),
+                            shape = CircleShape,
+                            colors = textFieldColors
+                        )
+
+                        Spacer(modifier = Modifier.height(18.dp))
+
+                        Box(
+                            modifier = Modifier
+                                .width(150.dp)
+                                .height(40.dp)
+                                .background(
+                                    color = Color(0xFF5B4DCC),
+                                    shape = RoundedCornerShape(50.dp)
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Sign Up",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text(
+                            text = "Already have an account?",
+                            fontSize = 13.sp,
+                            color = Color.Gray
+                        )
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Text(
+                            text = "Login",
+                            color = Color(0xFF5B4DCC),
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun Login() {
+
+        val textFieldColors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = Color(0xFFEBEBEB),
+            unfocusedContainerColor = Color.White,
+            focusedBorderColor = Color(0xFF5B4DCC),
+            unfocusedBorderColor = Color(0xFFA59CE9),
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF5B4DCC)),
+            contentAlignment = Alignment.Center
+        ) {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .fillMaxHeight(0.9f)
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(30.dp)
+                    )
+                    .padding(24.dp)
+            ) {
+
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        Spacer(modifier = Modifier.height(30.dp))
+
+                        // Imagagen principal
+                        Image(
+                            painter = painterResource(id = R.drawable.fondo_pantalla),
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(300.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(50.dp))
+
+                        //Title
+                        Text(
+                            text = "Login",
+                            fontSize = 23.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black
+                        )
+
+                        Spacer(modifier = Modifier.height(25.dp))
+
+                        var email by remember { mutableStateOf("") }
+
+                        OutlinedTextField(
+                            value = email,
+                            onValueChange = { email = it },
+                            enabled = true,
+                            readOnly = false,
+                            label = { Text("Email", color = Color.DarkGray) },
+                            modifier = Modifier.padding(5.dp),
+                            shape = CircleShape,
+                            colors = textFieldColors
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        var password by remember { mutableStateOf("") }
+
+                        OutlinedTextField(
+                            value = password,
+                            onValueChange = { password = it },
+                            enabled = true,
+                            readOnly = false,
+                            label = { Text("Password", color = Color.DarkGray) },
+                            visualTransformation = PasswordVisualTransformation(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            modifier = Modifier.padding(5.dp),
+                            shape = CircleShape,
+                            colors = textFieldColors
+                        )
+
+                        Spacer(modifier = Modifier.height(35.dp))
+
+                        Box(
+                            modifier = Modifier
+                                .width(150.dp)
+                                .height(40.dp)
+                                .background(
+                                    color = Color(0xFF5B4DCC),
+                                    shape = RoundedCornerShape(50.dp)
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Login",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        Text(
+                            text = "Don't have an account?",
+                            fontSize = 13.sp,
+                            color = Color.Gray
+                        )
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Text(
+                            text = "Sign up",
+                            color = Color(0xFF5B4DCC),
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+
 }
