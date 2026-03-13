@@ -2,6 +2,7 @@ package com.example.myapplication.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -34,7 +34,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +43,10 @@ import androidx.compose.ui.layout.ContentScale
 @Composable
 fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
 
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+
     val textFieldColors = OutlinedTextFieldDefaults.colors(
         focusedContainerColor = Color(0xFFEBEBEB),
         unfocusedContainerColor = Color.White,
@@ -52,14 +55,14 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color(0xFF5B4DCC)),
         contentAlignment = Alignment.Center
     ) {
 
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(0.9f)
                 .fillMaxHeight(0.9f)
                 .background(
@@ -70,7 +73,7 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
         ) {
 
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
@@ -79,19 +82,19 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = modifier.height(30.dp))
 
                     // Imagagen principal
                     Image(
                         painter = painterResource(id = R.drawable.fondo_pantalla),
                         contentDescription = null,
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxWidth()
                             .height(300.dp)
                     )
 
-                    Spacer(modifier = Modifier.height(50.dp))
+                    Spacer(modifier = modifier.height(50.dp))
 
                     //Title
                     Text(
@@ -101,9 +104,7 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                         color = Color.Black
                     )
 
-                    Spacer(modifier = Modifier.height(25.dp))
-
-                    var email by remember { mutableStateOf("") }
+                    Spacer(modifier = modifier.height(25.dp))
 
                     OutlinedTextField(
                         value = email,
@@ -111,14 +112,12 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                         enabled = true,
                         readOnly = false,
                         label = { Text("Email", color = Color.DarkGray) },
-                        modifier = Modifier.padding(5.dp),
+                        modifier = modifier.padding(5.dp),
                         shape = CircleShape,
                         colors = textFieldColors
                     )
 
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    var password by remember { mutableStateOf("") }
+                    Spacer(modifier = modifier.height(20.dp))
 
                     OutlinedTextField(
                         value = password,
@@ -128,37 +127,20 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                         label = { Text("Password", color = Color.DarkGray) },
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        modifier = Modifier.padding(5.dp),
+                        modifier = modifier.padding(5.dp),
                         shape = CircleShape,
                         colors = textFieldColors
                     )
 
-                    Spacer(modifier = Modifier.height(35.dp))
+                    Spacer(modifier = modifier.height(35.dp))
 
-                    /*Box(
-                        modifier = Modifier
-                            .width(150.dp)
-                            .height(40.dp)
-                            .background(
-                                color = Color(0xFF5B4DCC),
-                                shape = RoundedCornerShape(50.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Login",
-                            color = Color.White,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }*/
                     Button(
                         onClick = {
-                            navController.navigate("welcome")
+                            navController.navigate("main")
                         },
-                        modifier = Modifier
+                        enabled = (password.isNotEmpty() && email.isNotEmpty()),
+                        modifier = modifier
                             .fillMaxWidth()
-                            //.weight(1f)
                             .height(40.dp),
                         shape = RoundedCornerShape(50.dp),
                         colors = ButtonDefaults.buttonColors(
@@ -173,7 +155,7 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = modifier.height(15.dp))
 
                     Text(
                         text = "Don't have an account?",
@@ -181,12 +163,15 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                         color = Color.Gray
                     )
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = modifier.height(4.dp))
 
                     Text(
                         text = "Sign up",
                         color = Color(0xFF5B4DCC),
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = modifier.clickable(onClick = {
+                            navController.navigate("signUp")
+                        })
                     )
                 }
             }

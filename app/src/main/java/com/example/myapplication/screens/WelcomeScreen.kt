@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,14 +37,14 @@ import androidx.compose.ui.layout.ContentScale
 fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color(0xFF5B4DCC)),
         contentAlignment = Alignment.Center
     ) {
 
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(0.9f)
                 .fillMaxHeight(0.9f)
                 .background(
@@ -56,7 +55,7 @@ fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
         ) {
 
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
@@ -65,7 +64,7 @@ fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = modifier.height(20.dp))
 
                     // Imagagen principal
                     Image(
@@ -77,7 +76,7 @@ fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                             .height(320.dp)
                     )
 
-                    Spacer(modifier = Modifier.height(55.dp))
+                    Spacer(modifier = modifier.height(55.dp))
 
                     //Texto principal
                     Text(
@@ -87,7 +86,7 @@ fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                         color = Color.Black
                     )
 
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = modifier.height(6.dp))
 
                     Text(
                         text = "Welcome To Little Drop, where\nyou manage you daily tasks",
@@ -96,31 +95,13 @@ fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                         textAlign = TextAlign.Center
                     )
 
-                    Spacer(modifier = Modifier.height(30.dp))
-
-                    // Botón de Login y Sign Up (Box)
-                    /*Box(
-                        modifier = Modifier
-                            .width(250.dp)
-                            .height(50.dp)
-                            .background(
-                                color = Color(0xFF5B4DCC),
-                                shape = RoundedCornerShape(50.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Login",
-                            color = Color.White,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }*/
+                    Spacer(modifier = modifier.height(30.dp))
 
                     Button(
                         onClick = {
                             navController.navigate("login")
                         },
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxWidth()
                             .height(50.dp),
                         shape = RoundedCornerShape(50.dp),
@@ -136,31 +117,13 @@ fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(18.dp))
-
-                    /*Box(
-                        modifier = Modifier
-                            .width(250.dp)
-                            .height(50.dp)
-                            .border(
-                                width = 2.dp,
-                                color = Color(0xFF5B4DCC),
-                                shape = RoundedCornerShape(50.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Sign Up",
-                            color = Color(0xFF5B4DCC),
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }*/
+                    Spacer(modifier = modifier.height(18.dp))
 
                     Button(
                         onClick = {
                             navController.navigate("signUp")
                         },
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxWidth()
                             .height(50.dp)
                             .border(
@@ -180,7 +143,7 @@ fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(35.dp))
+                    Spacer(modifier = modifier.height(35.dp))
 
                     //Links para sign up
                     Text(
@@ -189,7 +152,7 @@ fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                         color = Color.Gray
                     )
 
-                    Spacer(modifier = Modifier.height(13.dp))
+                    Spacer(modifier = modifier.height(13.dp))
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(15.dp)
@@ -197,19 +160,19 @@ fun WelcomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                         Image(
                             painter = painterResource(id = R.drawable.facebook),
                             contentDescription = null,
-                            modifier = Modifier.size(30.dp)
+                            modifier = modifier.size(30.dp)
                         )
 
                         Image(
                             painter = painterResource(id = R.drawable.google_plus),
                             contentDescription = null,
-                            modifier = Modifier.size(30.dp)
+                            modifier = modifier.size(30.dp)
                         )
 
                         Image(
                             painter = painterResource(id = R.drawable.linked_in),
                             contentDescription = null,
-                            modifier = Modifier.size(30.dp)
+                            modifier = modifier.size(30.dp)
                         )
                     }
                 }

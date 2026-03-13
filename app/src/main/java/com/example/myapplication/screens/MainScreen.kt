@@ -55,7 +55,7 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier) {
                 .padding(top = 16.dp),
             shape = RoundedCornerShape(25.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF4644AA)
+                containerColor = Color(0xFFAFA6F5)
             )
         ) {
             Text("Option 1")
@@ -69,7 +69,7 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier) {
                 .padding(top = 16.dp),
             shape = RoundedCornerShape(25.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF4644AA)
+                containerColor = Color(0xFFAFA6F5)
             )
         ) {
             Text("Option 2")
@@ -86,7 +86,7 @@ fun MainScreen(navController: NavController, modifier: Modifier = Modifier) {
                 .height(100.dp),
             shape = RoundedCornerShape(30.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Gray
+                containerColor = Color(0xFF5B4DCC)
             )
         ) {
             Text(

@@ -2,17 +2,16 @@ package com.example.myapplication.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -35,7 +34,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,7 +51,8 @@ fun SignUpScreen(navController: NavController, modifier: Modifier = Modifier) {
     var nameError by remember { mutableStateOf(false) }
     var phoneError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
-    var mailError by remember { mutableStateOf(false) }
+    var confirmPasswordError by remember { mutableStateOf(false) }
+    var emailError by remember { mutableStateOf(false) }
 
 
     fun isValidEmail(email: String): Boolean {
@@ -68,11 +67,15 @@ fun SignUpScreen(navController: NavController, modifier: Modifier = Modifier) {
         return phone.length == 10 && phone.all { it.isDigit() }
     }
 
-    fun passwordsMatch(pass: String, confirmPass: String): Boolean {
-        return pass == confirmPass && pass.isNotEmpty()
+    fun isValidPassword(password: String): Boolean {
+        return password.length >= 8
     }
 
-    val formValid = nameError && mailError && phoneError && passwordError
+    fun passwordsMatch(password: String, confirmPass: String): Boolean {
+        return password == confirmPass && password.isNotEmpty()
+    }
+
+    val formValid = nameError && emailError && phoneError && passwordError && confirmPasswordError
 
     val textFieldColors = OutlinedTextFieldDefaults.colors(
         focusedContainerColor = Color(0xFFEBEBEB),
@@ -82,14 +85,14 @@ fun SignUpScreen(navController: NavController, modifier: Modifier = Modifier) {
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color(0xFF5B4DCC)),
         contentAlignment = Alignment.Center
     ) {
 
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(0.9f)
                 .fillMaxHeight(0.9f)
                 .background(
@@ -100,7 +103,7 @@ fun SignUpScreen(navController: NavController, modifier: Modifier = Modifier) {
         ) {
 
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
@@ -109,19 +112,19 @@ fun SignUpScreen(navController: NavController, modifier: Modifier = Modifier) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = modifier.height(15.dp))
 
                     // Imagagen principal
                     Image(
                         painter = painterResource(id = R.drawable.fondo_pantalla),
                         contentDescription = null,
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxWidth()
                             .height(130.dp)
                     )
 
-                    Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = modifier.height(30.dp))
 
                     //Title
                     Text(
@@ -131,102 +134,100 @@ fun SignUpScreen(navController: NavController, modifier: Modifier = Modifier) {
                         color = Color.Black
                     )
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = modifier.height(15.dp))
 
                     OutlinedTextField(
                         value = name,
-                        onValueChange = { name = it },
+                        onValueChange = {
+                            name = it
+                            nameError = isValidName(it)},
                         enabled = true,
                         readOnly = false,
                         label = { Text("Full name", color = Color.DarkGray) },
-                        modifier = Modifier.padding(5.dp),
+                        modifier = modifier.padding(5.dp),
+                        isError = !nameError,
                         shape = CircleShape,
                         colors = textFieldColors
                     )
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = modifier.height(15.dp))
 
                     OutlinedTextField(
                         value = email,
-                        onValueChange = { email = it },
+                        onValueChange = {
+                            email = it
+                            emailError = isValidEmail(it)},
                         enabled = true,
                         readOnly = false,
                         label = { Text("Email", color = Color.DarkGray) },
-                        modifier = Modifier.padding(5.dp),
+                        modifier = modifier.padding(5.dp),
+                        isError = !emailError,
                         shape = CircleShape,
                         colors = textFieldColors
                     )
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = modifier.height(15.dp))
 
                     OutlinedTextField(
                         value = phone,
-                        onValueChange = { phone = it },
+                        onValueChange = {
+                            phone = it
+                            phoneError = isValidPhone(it)},
                         enabled = true,
                         readOnly = false,
                         label = { Text("Phone number", color = Color.DarkGray) },
-                        modifier = Modifier.padding(5.dp),
+                        modifier = modifier.padding(5.dp),
+                        isError = !phoneError,
                         shape = CircleShape,
                         colors = textFieldColors
                     )
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = modifier.height(15.dp))
 
 
                     OutlinedTextField(
                         value = password,
-                        onValueChange = { password = it },
+                        onValueChange = {
+                            password = it
+                            passwordError = isValidPassword(it)},
                         enabled = true,
                         readOnly = false,
                         label = { Text("Password", color = Color.DarkGray) },
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        modifier = Modifier.padding(5.dp),
+                        modifier = modifier.padding(5.dp),
+                        isError = !passwordError,
                         shape = CircleShape,
                         colors = textFieldColors
                     )
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = modifier.height(15.dp))
 
 
                     OutlinedTextField(
                         value = confirmPassword,
-                        onValueChange = { confirmPassword = it },
+                        onValueChange = {
+                            confirmPassword = it
+                            confirmPasswordError = passwordsMatch(password,it)},
                         enabled = true,
                         readOnly = false,
                         label = { Text("Confirm Password", color = Color.DarkGray) },
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        modifier = Modifier.padding(5.dp),
+                        modifier = modifier.padding(5.dp),
+                        isError = !confirmPasswordError,
                         shape = CircleShape,
                         colors = textFieldColors
                     )
 
-                    Spacer(modifier = Modifier.height(18.dp))
-
-                    /*Box(
-                        modifier = Modifier
-                            .width(150.dp)
-                            .height(40.dp)
-                            .background(
-                                color = Color(0xFF5B4DCC),
-                                shape = RoundedCornerShape(50.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Sign Up",
-                            color = Color.White,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }*/
+                    Spacer(modifier = modifier.height(18.dp))
 
                     Button(
                         onClick = {
-                            navController.navigate("welcome")
+                            navController.navigate("login")
                         },
-                        modifier = Modifier
+                        enabled = formValid,
+                        modifier = modifier
                             .fillMaxWidth()
                             .weight(1f)
                             .height(40.dp),
@@ -243,7 +244,7 @@ fun SignUpScreen(navController: NavController, modifier: Modifier = Modifier) {
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = modifier.height(12.dp))
 
                     Text(
                         text = "Already have an account?",
@@ -251,13 +252,17 @@ fun SignUpScreen(navController: NavController, modifier: Modifier = Modifier) {
                         color = Color.Gray
                     )
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = modifier.height(4.dp))
 
                     Text(
                         text = "Login",
                         color = Color(0xFF5B4DCC),
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = modifier.clickable(onClick = {
+                            navController.navigate("login")
+                        })
                     )
+
                 }
             }
         }
